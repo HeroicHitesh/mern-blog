@@ -41,3 +41,9 @@ nav a:hover {
     margin: auto;
     padding-top: 64px;
 }
+
+.article-list-item {
+    text-decoration: none;
+    color: black;
+    padding: 16px 0 0 0;
+}
