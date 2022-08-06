@@ -13,6 +13,12 @@ button {
     cursor: pointer;
 }
 
+.clow {
+    position: relative;
+    top: 2.6em;
+    text-decoration: underline;
+}
+
 h3, h4 {
     margin-bottom: 1em;
 }
@@ -92,10 +98,11 @@ nav a:hover {
     border-radius: 1.6em;
 }
 
-#upvotes-section p {
+#upvotes-section button, h5 {
     font-size: .9em;
     display: inline-block;
-    margin-left: 1em;
+    margin-right: 16px;
+    border-radius: 1.6em;
 }
 
 p {
