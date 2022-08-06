@@ -3,7 +3,7 @@ body {
     font-size: 18px;
 }
 
-h3 {
+h3, h4 {
     margin-bottom: 1em;
 }
 
@@ -55,4 +55,13 @@ nav a:hover {
 .article-list-item p {
     padding-bottom: 32px;
     border-bottom: 2px solid black;
+}
+
+p {
+    margin-right: 16px;
+}
+
+.comment {
+    border-bottom: 2px solid black;
+    padding: 16px;
 }
