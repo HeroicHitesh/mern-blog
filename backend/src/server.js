@@ -6,29 +6,32 @@ const app = express();
 
 app.use(bodyParser.json());
 
-app.get('/api/articles/:name', async (req, res) => {
+const withDB = async (operations, res) => {
     try {
-        const articleName = req.params.name;
-
         const client = await MongoClient.connect('mongodb://localhost:27017', { useNewUrlParser: true });
         const db = client.db('mern-blog');
 
-        const articleInfo = await db.collection('articles').findOne({ name: articleName });
-        res.status(200).json(articleInfo);
+        await operations(db);
 
         client.close();
     } catch (error) {
         res.status(500).json({ message: 'Error connecting to db', error });
     }
+}
+
+app.get('/api/articles/:name', async (req, res) => {
+    const articleName = req.params.name;
+
+    withDB(async (db) => {
+        const articleInfo = await db.collection('articles').findOne({ name: articleName });
+        res.status(200).json(articleInfo);
+    }, res);
 });
 
 app.post('/api/articles/:name/upvote', async (req, res) => {
-    try {
-        const articleName = req.params.name;
+    const articleName = req.params.name;
 
-        const client = await MongoClient.connect('mongodb://localhost:27017', { useNewUrlParser: true });
-        const db = client.db('mern-blog');
-
+    withDB(async (db) => {
         const articleInfo = await db.collection('articles').findOne({ name: articleName });
         await db.collection('articles').updateOne({ name: articleName }, {
             '$set': {
@@ -38,11 +41,7 @@ app.post('/api/articles/:name/upvote', async (req, res) => {
 
         const updatedArticleInfo = await db.collection('articles').findOne({ name: articleName });
         res.status(200).json(updatedArticleInfo);
-
-        client.close();
-    } catch (error) {
-        res.status(500).json({ message: 'Error connecting to db', error });
-    }
+    }, res);
 });
 
 app.post('/api/articles/:name/add-comment', (req, res) => {
