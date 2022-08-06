@@ -11,7 +11,12 @@ const ArticlePage = () => {
     const [articleInfo, setArticleInfo] = useState({ upvotes: 0, comments: [] });
 
     useEffect(() => {
-        setArticleInfo({ upvotes: Math.ceil(Math.random() * 10) });
+        const fetchData = async () => {
+            const result = await fetch(`http://localhost:8000/api/articles/${name}`);
+            const body = await result.json();
+            setArticleInfo(body);
+        };
+        fetchData();
     }, [name]);
 
     const otherArticles = articleContent.filter(article => article.name !== name);
