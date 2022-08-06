@@ -24,7 +24,8 @@ const ArticlePage = () => {
 
     const otherArticles = articleContent.filter(article => article.name !== name);
 
-    if (!article) return <NotFoundPage />
+    if (!article) return <NotFoundPage />;
+
     return (
         <>
             <h1>{article.title}</h1>
@@ -38,6 +39,6 @@ const ArticlePage = () => {
             <ArticlesList articles={otherArticles} />
         </>
     );
-}
+};
 
 export default ArticlePage;
